@@ -1,23 +1,26 @@
-</> JavaScript
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
 export default function AutoSpareShop() {
   const phone = "254702924829";
   const [search, setSearch] = useState("");
- const products = [
+
+  const products = [
     {
       name: "Brake Pads",
       brand: "Toyota",
       price: "KSh 3,000",
-      image: "https://images.unsplash.com/photo-1600705720860-73f51f56c8c4?q=80&w=600",
+      image:
+        "https://images.unsplash.com/photo-1600705720860-73f51f56c8c4?q=80&w=600",
     },
     {
       name: "Oil Filter",
       brand: "Nissan",
       price: "KSh 800",
-      image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=600",
+      image:
+        "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=600",
     },
   ];
 
@@ -27,53 +30,52 @@ export default function AutoSpareShop() {
       p.brand.toLowerCase().includes(search.toLowerCase())
   );
 
-return (
-  <div className="p-6 max-w-6xl mx-auto">
+  return (
+    <div className="p-6 max-w-6xl mx-auto">
 
-    <h1 className="text-3xl font-bold">
-      Nairobi Auto Spares
-    </h1>
+      <h1 className="text-3xl font-bold">
+        Nairobi Auto Spares
+      </h1>
 
-    <p className="text-gray-600 mb-4">
-      Genuine spare parts sourced locally with fast delivery across Nairobi.
-    </p>
+      <p className="text-gray-600 mb-4">
+        Genuine spare parts sourced locally with fast delivery across Nairobi.
+      </p>
 
-    {/* Search */}
-    <Input
-      placeholder="Search Toyota, Nissan, Subaru..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-      className="mb-6"
-    />
+      <Input
+        placeholder="Search Toyota, Nissan, Subaru..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="mb-6"
+      />
 
-    {/* Products */}
-    <div className="grid md:grid-cols-3 gap-4">
-      {filtered.map((product, index) => (
-        <Card key={index}>
-          <img
-            src={product.image}
-            className="h-40 w-full object-cover"
-            alt={product.name}
-          />
+      <div className="grid md:grid-cols-3 gap-4">
+        {filtered.map((product, index) => (
+          <Card key={index}>
+            <img
+              src={product.image}
+              className="h-40 w-full object-cover"
+              alt={product.name}
+            />
 
-          <CardContent>
-            <h2 className="font-bold">{product.name}</h2>
-            <p>{product.brand}</p>
-            <p className="font-bold">{product.price}</p>
+            <CardContent>
+              <h2 className="font-bold">{product.name}</h2>
+              <p>{product.brand}</p>
+              <p className="font-bold">{product.price}</p>
 
-            <Button
-              onClick={() =>
-                window.open(
-                  `https://wa.me/${phone}?text=I want ${product.name} for ${product.brand}`
-                )
-              }
-            >
-              Order on WhatsApp
-            </Button>
-          </CardContent>
-        </Card>
-      ))}
+              <Button
+                onClick={() =>
+                  window.open(
+                    `https://wa.me/${phone}?text=I want ${product.name} for ${product.brand}`
+                  )
+                }
+              >
+                Order on WhatsApp
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
     </div>
-
-  </div>
-);
+  );
+}
