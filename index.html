@@ -1,112 +1,61 @@
+</> JavaScript
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
 export default function AutoSpareShop() {
   const phone = "254702924829";
-
   const [search, setSearch] = useState("");
-  const [brand, setBrand] = useState("All");
-
-  const products = [
+ const products = [
     {
       name: "Brake Pads",
       brand: "Toyota",
       price: "KSh 3,000",
-      image:
-        "https://images.unsplash.com/photo-1600705720860-73f51f56c8c4?q=80&w=600",
+      image: "https://images.unsplash.com/photo-1600705720860-73f51f56c8c4?q=80&w=600",
     },
     {
       name: "Oil Filter",
       brand: "Nissan",
       price: "KSh 800",
-      image:
-        "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=600",
-    },
-    {
-      name: "Air Filter",
-      brand: "Subaru",
-      price: "KSh 1,200",
-      image:
-        "https://images.unsplash.com/photo-1625047509168-a7026f36de04?q=80&w=600",
-    },
-    {
-      name: "Spark Plugs",
-      brand: "Toyota",
-      price: "KSh 1,500",
-      image:
-        "https://images.unsplash.com/photo-1597764690523-15bea4c581c9?q=80&w=600",
-    },
-    {
-      name: "Wiper Blades",
-      brand: "Nissan",
-      price: "KSh 900",
-      image:
-        "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?q=80&w=600",
+      image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=600",
     },
   ];
 
-  const filtered = products.filter((p) => {
-    const matchesSearch =
+  const filtered = products.filter(
+    (p) =>
       p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.brand.toLowerCase().includes(search.toLowerCase());
-
-    const matchesBrand = brand === "All" || p.brand === brand;
-
-    return matchesSearch && matchesBrand;
-  });
+      p.brand.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-4xl font-bold">Nairobi Auto Spares</h1>
-        <p className="text-gray-600">
-          Genuine car spare parts sourced locally with fast delivery across Nairobi
-        </p>
-      </div>
 
-      {/* Filters */}
-      <div className="grid md:grid-cols-2 gap-4 mb-6">
-        <Input
-          placeholder="Search parts or car brand..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      <h1 className="text-3xl font-bold">Nairobi Auto Spares</h1>
+      <p className="text-gray-600 mb-4">
+        Genuine spare parts with fast delivery in Nairobi
+      </p>
 
-        <select
-          className="border rounded-xl p-2"
-          value={brand}
-          onChange={(e) => setBrand(e.target.value)}
-        >
-          <option value="All">All Brands</option>
-          <option value="Toyota">Toyota</option>
-          <option value="Nissan">Nissan</option>
-          <option value="Subaru">Subaru</option>
-        </select>
-      </div>
+      <Input
+        placeholder="Search Toyota, Nissan, parts..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="mb-6"
+      />
 
-      {/* Products */}
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-3 gap-4">
         {filtered.map((product, index) => (
-          <Card key={index} className="rounded-2xl shadow-lg overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="h-48 w-full object-cover"
-            />
+          <Card key={index}>
+            <img src={product.image} className="h-40 w-full object-cover" />
 
-            <CardContent className="p-4">
-              <h2 className="text-xl font-semibold">{product.name}</h2>
-              <p className="text-sm text-gray-500">Brand: {product.brand}</p>
-              <p className="font-bold mt-2">{product.price}</p>
+            <CardContent>
+              <h2 className="font-bold">{product.name}</h2>
+              <p>{product.brand}</p>
+              <p className="font-bold">{product.price}</p>
 
               <Button
-                className="mt-3 w-full"
                 onClick={() =>
                   window.open(
-                    `https://wa.me/${phone}?text=Hello, I want ${product.name} for ${product.brand}`
+                    `https://wa.me/${phone}?text=I want ${product.name} for ${product.brand}`
                   )
                 }
               >
@@ -116,25 +65,3 @@ export default function AutoSpareShop() {
           </Card>
         ))}
       </div>
-
-      {/* M-Pesa Section */}
-      <div className="mt-12 p-6 bg-green-50 rounded-2xl border">
-        <h2 className="text-2xl font-bold">M-Pesa Payment</h2>
-        <p className="text-gray-700 mt-2">
-          Pay after confirming your order via WhatsApp
-        </p>
-
-        <div className="mt-3">
-          <p><strong>Send Money:</strong> 0702924829</p>
-          <p><strong>Account:</strong> Car Part / Your Name</p>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="mt-10 text-center text-gray-500">
-        © {new Date().getFullYear()} Nairobi Auto Spares | Fast & Reliable Parts
-      </div>
-    </div>
-  );
-}
-
