@@ -1,38 +1,135 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Nairobi Auto Spares</title>
-</head>
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-<body style="font-family:Arial; padding:40px;">
+export default function AutoSpareShop() {
+  const phone = "254702924829";
 
-<h1>Nairobi Auto Spares Online</h1>
+  const products = [
+    {
+      name: "Brake Pads",
+      brand: "Toyota",
+      price: "KSh 3,000",
+      image:
+        "https://images.unsplash.com/photo-1600705720860-73f51f56c8c4?q=80&w=600",
+    },
+    {
+      name: "Oil Filter",
+      brand: "Nissan",
+      price: "KSh 800",
+      image:
+        "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=600",
+    },
+    {
+      name: "Air Filter",
+      brand: "Subaru",
+      price: "KSh 1,200",
+      image:
+        "https://images.unsplash.com/photo-1625047509168-a7026f36de04?q=80&w=600",
+    },
+    {
+      name: "Spark Plugs",
+      brand: "Toyota",
+      price: "KSh 1,500",
+      image:
+        "https://images.unsplash.com/photo-1597764690523-15bea4c581c9?q=80&w=600",
+    },
+    {
+      name: "Wiper Blades",
+      brand: "Nissan",
+      price: "KSh 900",
+      image:
+        "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?q=80&w=600",
+    },
+  ];
 
-<p>Order genuine auto spare parts. Fast sourcing and delivery.</p>
+  const [search, setSearch] = useState("");
 
-<h2>Available Parts</h2>
+  const filtered = products.filter(
+    (p) =>
+      p.name.toLowerCase().includes(search.toLowerCase()) ||
+      p.brand.toLowerCase().includes(search.toLowerCase())
+  );
 
-<ul>
-<li>Brake Pads - KSh 3,000</li>
-<li>Oil Filter - KSh 800</li>
-<li>Air Filter - KSh 1,200</li>
-<li>Spark Plugs - KSh 1,500</li>
-<li>Wiper Blades - KSh 900</li>
-</ul>
+  const mpesaNumber = "0702924829";
 
-<p>
-<a href="https://wa.me/254702924829">
-Order on WhatsApp
-</a>
-</p>
+  return (
+    <div className="p-6 max-w-6xl mx-auto">
+      <h1 className="text-4xl font-bold mb-2">Nairobi Auto Spares</h1>
+      <p className="mb-6 text-gray-600">
+        Genuine spare parts sourced locally with fast delivery across Nairobi.
+      </p>
 
-<h3>Request a Part</h3>
+      <Input
+        placeholder="Search by car brand (Toyota, Nissan, Subaru) or part..."
+        className="mb-6"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
-<p>Send us your car model, year and part needed.</p>
+      <div className="grid md:grid-cols-3 gap-6">
+        {filtered.map((product, index) => (
+          <Card key={index} className="rounded-2xl shadow-lg">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="rounded-t-2xl h-48 w-full object-cover"
+            />
 
-<a href="https://wa.me/254702924829">
-Chat on WhatsApp
-</a>
+            <CardContent className="p-4">
+              <h2 className="text-xl font-semibold">{product.name}</h2>
+              <p className="text-sm text-gray-500">For {product.brand}</p>
+              <p className="font-bold mt-2">{product.price}</p>
 
-</body>
-</html>
+              <Button
+                className="mt-3 w-full"
+                onClick={() =>
+                  window.open(
+                    `https://wa.me/${phone}?text=Hello, I want to order ${product.name} for ${product.brand}`
+                  )
+                }
+              >
+                Order on WhatsApp
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="mt-12 p-6 bg-gray-100 rounded-2xl">
+        <h2 className="text-2xl font-bold mb-2">M-Pesa Payment</h2>
+
+        <p>Pay easily using M-Pesa after confirming your order.</p>
+
+        <div className="mt-3">
+          <p>
+            <strong>Paybill / Send Money:</strong> {mpesaNumber}
+          </p>
+          <p>
+            <strong>Account:</strong> Your Name / Car Model
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-10">
+        <h2 className="text-2xl font-bold">Request Any Spare Part</h2>
+
+        <p className="text-gray-600">
+          Send your car model, year, engine size and the part needed.
+        </p>
+
+        <Button
+          className="mt-4"
+          onClick={() =>
+            window.open(
+              `https://wa.me/${phone}?text=Hello, I need help finding a spare part for my car.`
+            )
+          }
+        >
+          Chat on WhatsApp
+        </Button>
+      </div>
+    </div>
+  );
+}
