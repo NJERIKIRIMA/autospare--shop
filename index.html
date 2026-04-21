@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input";
 export default function AutoSpareShop() {
   const phone = "254702924829";
 
+  const [search, setSearch] = useState("");
+  const [brand, setBrand] = useState("All");
+
   const products = [
     {
       name: "Brake Pads",
@@ -44,49 +47,66 @@ export default function AutoSpareShop() {
     },
   ];
 
-  const [search, setSearch] = useState("");
-
-  const filtered = products.filter(
-    (p) =>
+  const filtered = products.filter((p) => {
+    const matchesSearch =
       p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.brand.toLowerCase().includes(search.toLowerCase())
-  );
+      p.brand.toLowerCase().includes(search.toLowerCase());
 
-  const mpesaNumber = "0702924829";
+    const matchesBrand = brand === "All" || p.brand === brand;
+
+    return matchesSearch && matchesBrand;
+  });
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-4xl font-bold mb-2">Nairobi Auto Spares</h1>
-      <p className="mb-6 text-gray-600">
-        Genuine spare parts sourced locally with fast delivery across Nairobi.
-      </p>
+      {/* Header */}
+      <div className="mb-6">
+        <h1 className="text-4xl font-bold">Nairobi Auto Spares</h1>
+        <p className="text-gray-600">
+          Genuine car spare parts sourced locally with fast delivery across Nairobi
+        </p>
+      </div>
 
-      <Input
-        placeholder="Search by car brand (Toyota, Nissan, Subaru) or part..."
-        className="mb-6"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      {/* Filters */}
+      <div className="grid md:grid-cols-2 gap-4 mb-6">
+        <Input
+          placeholder="Search parts or car brand..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
+        <select
+          className="border rounded-xl p-2"
+          value={brand}
+          onChange={(e) => setBrand(e.target.value)}
+        >
+          <option value="All">All Brands</option>
+          <option value="Toyota">Toyota</option>
+          <option value="Nissan">Nissan</option>
+          <option value="Subaru">Subaru</option>
+        </select>
+      </div>
+
+      {/* Products */}
       <div className="grid md:grid-cols-3 gap-6">
         {filtered.map((product, index) => (
-          <Card key={index} className="rounded-2xl shadow-lg">
+          <Card key={index} className="rounded-2xl shadow-lg overflow-hidden">
             <img
               src={product.image}
               alt={product.name}
-              className="rounded-t-2xl h-48 w-full object-cover"
+              className="h-48 w-full object-cover"
             />
 
             <CardContent className="p-4">
               <h2 className="text-xl font-semibold">{product.name}</h2>
-              <p className="text-sm text-gray-500">For {product.brand}</p>
+              <p className="text-sm text-gray-500">Brand: {product.brand}</p>
               <p className="font-bold mt-2">{product.price}</p>
 
               <Button
                 className="mt-3 w-full"
                 onClick={() =>
                   window.open(
-                    `https://wa.me/${phone}?text=Hello, I want to order ${product.name} for ${product.brand}`
+                    `https://wa.me/${phone}?text=Hello, I want ${product.name} for ${product.brand}`
                   )
                 }
               >
@@ -97,39 +117,24 @@ export default function AutoSpareShop() {
         ))}
       </div>
 
-      <div className="mt-12 p-6 bg-gray-100 rounded-2xl">
-        <h2 className="text-2xl font-bold mb-2">M-Pesa Payment</h2>
-
-        <p>Pay easily using M-Pesa after confirming your order.</p>
+      {/* M-Pesa Section */}
+      <div className="mt-12 p-6 bg-green-50 rounded-2xl border">
+        <h2 className="text-2xl font-bold">M-Pesa Payment</h2>
+        <p className="text-gray-700 mt-2">
+          Pay after confirming your order via WhatsApp
+        </p>
 
         <div className="mt-3">
-          <p>
-            <strong>Paybill / Send Money:</strong> {mpesaNumber}
-          </p>
-          <p>
-            <strong>Account:</strong> Your Name / Car Model
-          </p>
+          <p><strong>Send Money:</strong> 0702924829</p>
+          <p><strong>Account:</strong> Car Part / Your Name</p>
         </div>
       </div>
 
-      <div className="mt-10">
-        <h2 className="text-2xl font-bold">Request Any Spare Part</h2>
-
-        <p className="text-gray-600">
-          Send your car model, year, engine size and the part needed.
-        </p>
-
-        <Button
-          className="mt-4"
-          onClick={() =>
-            window.open(
-              `https://wa.me/${phone}?text=Hello, I need help finding a spare part for my car.`
-            )
-          }
-        >
-          Chat on WhatsApp
-        </Button>
+      {/* Footer */}
+      <div className="mt-10 text-center text-gray-500">
+        © {new Date().getFullYear()} Nairobi Auto Spares | Fast & Reliable Parts
       </div>
     </div>
   );
 }
+
