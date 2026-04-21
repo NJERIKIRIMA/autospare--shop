@@ -27,41 +27,16 @@ export default function AutoSpareShop() {
       p.brand.toLowerCase().includes(search.toLowerCase())
   );
 
-  return (
-    <div className="p-6 max-w-6xl mx-auto">
+ return (
+  <div className="p-6 max-w-6xl mx-auto">
 
-      <h1 className="text-3xl font-bold">Nairobi Auto Spares</h1>
-      <p className="text-gray-600 mb-4">
-        Genuine spare parts with fast delivery in Nairobi
-      </p>
+    <h1 className="text-3xl font-bold">
+      Nairobi Auto Spares
+    </h1>
 
-      <Input
-        placeholder="Search Toyota, Nissan, parts..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="mb-6"
-      />
+    <p className="text-gray-600 mb-4">
+      Genuine spare parts sourced locally with fast delivery across Nairobi.
+    </p>
 
-      <div className="grid md:grid-cols-3 gap-4">
-        {filtered.map((product, index) => (
-          <Card key={index}>
-            <img src={product.image} className="h-40 w-full object-cover" />
-
-            <CardContent>
-              <h2 className="font-bold">{product.name}</h2>
-              <p>{product.brand}</p>
-              <p className="font-bold">{product.price}</p>
-
-              <Button
-                onClick={() =>
-                  window.open(
-                    `https://wa.me/${phone}?text=I want ${product.name} for ${product.brand}`
-                  )
-                }
-              >
-                Order on WhatsApp
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+  </div>
+);
